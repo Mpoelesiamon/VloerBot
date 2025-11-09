@@ -9,43 +9,43 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 30 5% 15%;
+    --foreground: 23 32% 19%;
 
     --card: 0 0% 100%;
-    --card-foreground: 30 5% 15%;
+    --card-foreground: 23 32% 19%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 5% 15%;
+    --popover-foreground: 23 32% 19%;
 
-    /* Premium charcoal primary */
-    --primary: 30 5% 15%;
-    --primary-foreground: 30 10% 98%;
+    /* Brown primary */
+    --primary: 23 32% 19%;
+    --primary-foreground: 0 0% 100%;
 
     /* Warm neutral secondary */
     --secondary: 30 10% 95%;
-    --secondary-foreground: 30 5% 15%;
+    --secondary-foreground: 23 32% 19%;
 
     --muted: 30 10% 96%;
-    --muted-foreground: 30 5% 45%;
+    --muted-foreground: 23 32% 45%;
 
-    /* Bronze accent */
-    --accent: 25 45% 50%;
-    --accent-foreground: 30 10% 98%;
+    /* Orange accent */
+    --accent: 26 65% 54%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 30 10% 98%;
+    --destructive-foreground: 0 0% 100%;
 
     --border: 30 10% 90%;
     --input: 30 10% 90%;
-    --ring: 25 45% 50%;
+    --ring: 26 65% 54%;
 
     --radius: 0.75rem;
     
     /* Chat widget specific */
-    --chat-user-bg: 25 45% 50%;
-    --chat-user-fg: 30 10% 98%;
+    --chat-user-bg: 26 65% 54%;
+    --chat-user-fg: 0 0% 100%;
     --chat-bot-bg: 30 10% 96%;
-    --chat-bot-fg: 30 5% 15%;
+    --chat-bot-fg: 23 32% 19%;
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -74,38 +74,38 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 30 8% 10%;
-    --foreground: 30 10% 98%;
+    --background: 23 32% 19%;
+    --foreground: 0 0% 100%;
 
     --card: 30 8% 12%;
-    --card-foreground: 30 10% 98%;
+    --card-foreground: 0 0% 100%;
 
     --popover: 30 8% 12%;
-    --popover-foreground: 30 10% 98%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 30 10% 98%;
-    --primary-foreground: 30 5% 15%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 23 32% 19%;
 
     --secondary: 30 8% 18%;
-    --secondary-foreground: 30 10% 98%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 30 8% 18%;
     --muted-foreground: 30 10% 65%;
 
-    --accent: 25 45% 50%;
-    --accent-foreground: 30 10% 98%;
+    --accent: 26 65% 54%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 50%;
-    --destructive-foreground: 30 10% 98%;
+    --destructive-foreground: 0 0% 100%;
 
     --border: 30 8% 22%;
     --input: 30 8% 22%;
-    --ring: 25 45% 50%;
+    --ring: 26 65% 54%;
     
-    --chat-user-bg: 25 45% 50%;
-    --chat-user-fg: 30 10% 98%;
+    --chat-user-bg: 26 65% 54%;
+    --chat-user-fg: 0 0% 100%;
     --chat-bot-bg: 30 8% 18%;
-    --chat-bot-fg: 30 10% 98%;
+    --chat-bot-fg: 0 0% 100%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -123,6 +123,10 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body text-body;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-heading;
   }
 }

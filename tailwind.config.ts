@@ -13,6 +13,14 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        heading: ['Crimson Pro', 'serif'],
+        body: ['Inter', 'sans-serif'],
+      },
+      fontSize: {
+        'heading': '24px',
+        'body': '18px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
