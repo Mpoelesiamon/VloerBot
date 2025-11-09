@@ -15,9 +15,10 @@ interface Message {
 
 interface ChatWindowProps {
   onClose: () => void;
+  isOpen: boolean;
 }
 
-const ChatWindow = ({ onClose }: ChatWindowProps) => {
+const ChatWindow = ({ onClose, isOpen }: ChatWindowProps) => {
   const getInitialGreeting = () => {
     const dutchGreeting = "Hallo! Ik ben VloerBot, jouw AI-assistent voor vloeren. Hoe kan ik je helpen?";
     const englishGreeting = "Hi! I'm VloerBot, your flooring AI assistant. How can I help you today?";
@@ -174,11 +175,22 @@ const ChatWindow = ({ onClose }: ChatWindowProps) => {
             const content = parsed.choices?.[0]?.delta?.content as string | undefined;
             if (content) {
               botMessageText += content;
+              // Clean markdown formatting (remove ***, **, etc.)
+              const cleanedText = botMessageText
+                .replace(/\*\*\*/g, '') // Remove bold italic markers
+                .replace(/\*\*/g, '') // Remove bold markers
+                .replace(/\*/g, '') // Remove italic markers
+                .replace(/`([^`]+)`/g, '$1') // Remove inline code markers but keep text
+                .replace(/#{1,6}\s+/g, '') // Remove heading markers
+                .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Convert links to plain text
+                .replace(/_{2}([^_]+)_{2}/g, '$1') // Remove bold markers (underscores)
+                .replace(/_{1}([^_]+)_{1}/g, '$1'); // Remove italic markers (underscores)
+              
               setMessages(prev => {
                 const newMessages = [...prev];
                 const lastMessage = newMessages[newMessages.length - 1];
                 if (lastMessage && !lastMessage.isUser) {
-                  lastMessage.text = botMessageText;
+                  lastMessage.text = cleanedText;
                 }
                 return newMessages;
               });
@@ -207,6 +219,7 @@ const ChatWindow = ({ onClose }: ChatWindowProps) => {
     }
   };
 
+
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -215,7 +228,12 @@ const ChatWindow = ({ onClose }: ChatWindowProps) => {
       transition={{ type: "spring", damping: 25, stiffness: 200 }}
       className="fixed right-0 top-0 h-full w-full md:w-[380px] bg-background shadow-2xl flex flex-col z-[9999]"
     >
-      <ChatHeader onClose={onClose} />
+      <ChatHeader 
+        onClose={onClose} 
+        profileImage={typeof window !== 'undefined' && (window as any).vloerbotConfig?.profileImage 
+          ? (window as any).vloerbotConfig.profileImage 
+          : undefined} 
+      />
       
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         {messages.map((message) => (

@@ -2,13 +2,38 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+// Get credentials from WordPress (injected via PHP) or environment variables
+declare global {
+  interface Window {
+    vloerbotConfig?: {
+      supabaseUrl: string;
+      supabaseKey: string;
+    };
+  }
+}
+
+const getSupabaseConfig = () => {
+  // Check for WordPress configuration first
+  if (typeof window !== 'undefined' && window.vloerbotConfig) {
+    return {
+      url: window.vloerbotConfig.supabaseUrl,
+      key: window.vloerbotConfig.supabaseKey,
+    };
+  }
+
+  // Fallback to environment variables for development
+  return {
+    url: import.meta.env.VITE_SUPABASE_URL || '',
+    key: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || '',
+  };
+};
+
+const config = getSupabaseConfig();
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+export const supabase = createClient<Database>(config.url, config.key, {
   auth: {
     storage: localStorage,
     persistSession: true,

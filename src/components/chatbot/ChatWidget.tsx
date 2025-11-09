@@ -13,7 +13,7 @@ const ChatWidget = () => {
   return (
     <>
       <AnimatePresence>
-        {isOpen && <ChatWindow onClose={toggleChat} />}
+        {isOpen && <ChatWindow onClose={toggleChat} isOpen={isOpen} />}
       </AnimatePresence>
 
       <motion.button

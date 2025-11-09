@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 23 32% 19%;
 
-    /* Brown primary */
+    /* Brown primary - #402D21 */
     --primary: 23 32% 19%;
     --primary-foreground: 0 0% 100%;
 
@@ -28,8 +28,8 @@ All colors MUST be HSL.
     --muted: 30 10% 96%;
     --muted-foreground: 23 32% 45%;
 
-    /* Orange accent */
-    --accent: 26 65% 54%;
+    /* Orange accent - #D5803F */
+    --accent: 25 65% 54%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -42,10 +42,10 @@ All colors MUST be HSL.
     --radius: 0.75rem;
     
     /* Chat widget specific */
-    --chat-user-bg: 26 65% 54%;
+    --chat-user-bg: 25 65% 54%; /* #D5803F */
     --chat-user-fg: 0 0% 100%;
-    --chat-bot-bg: 30 10% 96%;
-    --chat-bot-fg: 23 32% 19%;
+    --chat-bot-bg: 0 0% 100%;
+    --chat-bot-fg: 23 32% 19%; /* #402D21 */
     
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -123,10 +123,31 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-body text-body;
+    @apply bg-background text-foreground;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading text-heading;
+  /* Chatbot specific font sizes */
+  #vloerbot-root {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+  }
+  
+  #vloerbot-root h1, 
+  #vloerbot-root h2, 
+  #vloerbot-root h3, 
+  #vloerbot-root h4, 
+  #vloerbot-root h5, 
+  #vloerbot-root h6 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 24px;
+    color: hsl(23 32% 19%); /* #402D21 */
+  }
+  
+  #vloerbot-root p,
+  #vloerbot-root span,
+  #vloerbot-root div {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: hsl(23 32% 19%); /* #402D21 */
   }
 }

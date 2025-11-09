@@ -38,7 +38,7 @@ const MessageBubble = ({ message, isUser, timestamp, attachments }: MessageBubbl
               : "bg-chat-bot-bg text-chat-bot-fg rounded-bl-sm"
           }`}
         >
-          <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+          <p className="text-[18px] leading-relaxed whitespace-pre-wrap break-words font-sans">
             {message}
           </p>
         </div>
