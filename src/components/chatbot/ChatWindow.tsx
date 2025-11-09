@@ -18,12 +18,33 @@ interface ChatWindowProps {
 }
 
 const ChatWindow = ({ onClose }: ChatWindowProps) => {
-  const [messages, setMessages] = useState<Message[]>([
+  const getInitialGreeting = () => {
+    const dutchGreeting = "Hallo! Ik ben VloerBot, jouw AI-assistent voor vloeren. Hoe kan ik je helpen?";
+    const englishGreeting = "Hi! I'm VloerBot, your flooring AI assistant. How can I help you today?";
+
+    if (typeof navigator === "undefined") {
+      return englishGreeting;
+    }
+
+    const language =
+      navigator.language ||
+      (Array.isArray(navigator.languages) && navigator.languages.length > 0
+        ? navigator.languages[0]
+        : "");
+
+    if (language?.toLowerCase().startsWith("nl")) {
+      return dutchGreeting;
+    }
+
+    return englishGreeting;
+  };
+
+  const [messages, setMessages] = useState<Message[]>(() => [
     {
       id: "1",
-      text: "Hallo! Ik ben VloerBot, jouw AI-assistent voor vloeren. Hoe kan ik je helpen?",
+      text: getInitialGreeting(),
       isUser: false,
-      timestamp: new Date().toLocaleTimeString("nl-NL", {
+      timestamp: new Date().toLocaleTimeString(undefined, {
         hour: "2-digit",
         minute: "2-digit",
       }),

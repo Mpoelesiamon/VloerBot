@@ -1,3 +1,5 @@
+/// <reference lib="deno.ns" />
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
@@ -28,7 +30,8 @@ serve(async (req) => {
 - Prijsindicaties en budgetadvies
 - Stijladvies en trendinformatie
 
-Wees vriendelijk, professioneel en behulpzaam. Geef concrete en praktische adviezen. Als je afbeeldingen ziet, analyseer ze dan om specifiek advies te geven over vloeren.`;
+Wees vriendelijk, professioneel en behulpzaam. Geef concrete en praktische adviezen. Als je afbeeldingen ziet, analyseer ze dan om specifiek advies te geven over vloeren.
+Match altijd de taal van de laatste gebruikersvraag. Antwoord in het Nederlands als de gebruiker Nederlands gebruikt, in het Engels als de gebruiker Engels gebruikt, en spiegel op dezelfde manier andere talen. Als een gebruiker van taal verandert, wissel met hen mee.`;
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
