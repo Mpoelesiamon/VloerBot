@@ -39,7 +39,7 @@ const Index = () => {
               </li>
               <li className="flex items-start">
                 <span className="text-accent mr-2">✓</span>
-                <span><strong>Beveiligde backend:</strong> Lovable Cloud voor opslag en AI</span>
+                <span><strong>Beveiligde backend:</strong> Cloud-gebaseerde opslag en AI</span>
               </li>
             </ul>
           </div>
@@ -52,7 +52,7 @@ const Index = () => {
               Deze chatbot gebruikt cutting-edge technologie:
             </p>
             <ul className="text-left space-y-2 text-muted-foreground">
-              <li>• <strong>Lovable Cloud</strong> - Backend infrastructure</li>
+              <li>• <strong>Cloud infrastructure</strong> - Backend infrastructuur</li>
               <li>• <strong>Google Gemini 2.5 Flash</strong> - AI model</li>
               <li>• <strong>Streaming responses</strong> - Real-time antwoorden</li>
               <li>• <strong>Image analysis</strong> - Visuele intelligentie</li>
