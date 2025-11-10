@@ -8,6 +8,11 @@ declare global {
     vloerbotConfig?: {
       supabaseUrl: string;
       supabaseKey: string;
+      profileImage?: string;
+      wpSiteUrl?: string;
+      wpApiUrl?: string;
+      botAvatar?: string;
+      userAvatar?: string;
     };
   }
 }

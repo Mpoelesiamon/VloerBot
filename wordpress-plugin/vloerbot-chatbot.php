@@ -81,11 +81,18 @@ class VloerBot_Chatbot {
             $supabase_url = get_option('vloerbot_supabase_url', '');
             $supabase_key = get_option('vloerbot_supabase_key', '');
             $profile_image = get_option('vloerbot_profile_image', '');
+            $bot_avatar = get_option('vloerbot_bot_avatar', '');
+            $user_avatar = get_option('vloerbot_user_avatar', '');
+            $wp_site_url = get_option('vloerbot_wp_site_url', home_url());
             
             wp_localize_script('vloerbot-chatbot', 'vloerbotConfig', array(
                 'supabaseUrl' => esc_url_raw($supabase_url),
                 'supabaseKey' => sanitize_text_field($supabase_key),
                 'profileImage' => esc_url_raw($profile_image),
+                'wpSiteUrl' => esc_url_raw($wp_site_url),
+                'wpApiUrl' => esc_url_raw(rest_url('vloerbot/v1/')),
+                'botAvatar' => esc_url_raw($bot_avatar),
+                'userAvatar' => esc_url_raw($user_avatar),
             ));
         }
     }
@@ -304,6 +311,18 @@ class VloerBot_Chatbot {
             'sanitize_callback' => 'esc_url_raw',
             'default' => '',
         ));
+        
+        register_setting('vloerbot_settings', 'vloerbot_bot_avatar', array(
+            'type' => 'string',
+            'sanitize_callback' => 'esc_url_raw',
+            'default' => '',
+        ));
+        
+        register_setting('vloerbot_settings', 'vloerbot_user_avatar', array(
+            'type' => 'string',
+            'sanitize_callback' => 'esc_url_raw',
+            'default' => '',
+        ));
     }
     
     /**
@@ -338,6 +357,21 @@ class VloerBot_Chatbot {
                 update_option('vloerbot_profile_image', esc_url_raw($_POST['vloerbot_profile_image']));
             }
             
+            // Handle bot avatar
+            if (isset($_POST['vloerbot_bot_avatar'])) {
+                update_option('vloerbot_bot_avatar', esc_url_raw($_POST['vloerbot_bot_avatar']));
+            }
+            
+            // Handle user avatar
+            if (isset($_POST['vloerbot_user_avatar'])) {
+                update_option('vloerbot_user_avatar', esc_url_raw($_POST['vloerbot_user_avatar']));
+            }
+            
+            // Handle WordPress site URL
+            if (isset($_POST['vloerbot_wp_site_url'])) {
+                update_option('vloerbot_wp_site_url', esc_url_raw($_POST['vloerbot_wp_site_url']));
+            }
+            
             echo '<div class="notice notice-success"><p>Settings saved successfully!</p></div>';
         }
         
@@ -347,6 +381,10 @@ class VloerBot_Chatbot {
         $accent_color = get_option('vloerbot_accent_color', '');
         $background_color = get_option('vloerbot_background_color', '');
         $font_family = get_option('vloerbot_font_family', '');
+        $profile_image = get_option('vloerbot_profile_image', '');
+        $bot_avatar = get_option('vloerbot_bot_avatar', '');
+        $user_avatar = get_option('vloerbot_user_avatar', '');
+        $wp_site_url = get_option('vloerbot_wp_site_url', home_url());
         ?>
         <div class="wrap">
             <h1>VloerBot Chatbot Settings</h1>
@@ -504,10 +542,78 @@ class VloerBot_Chatbot {
                             >Upload Image</button>
                             <?php if (!empty($profile_image)): ?>
                                 <div style="margin-top: 10px;">
-                                    <img src="<?php echo esc_url($profile_image); ?>" alt="Profile" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+                                    <img src="<?php echo esc_url($profile_image); ?>" alt="Profile" style="max-width: 200px; max-height: 100px; width: auto; height: auto; object-fit: contain;" />
                                 </div>
                             <?php endif; ?>
-                            <p class="description">URL to the chatbot's profile picture (recommended: 100x100px, square image)</p>
+                            <p class="description">URL to the chatbot's logo (displayed in header). Image will be sized to fit.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="vloerbot_bot_avatar">Bot Avatar</label>
+                        </th>
+                        <td>
+                            <input 
+                                type="url" 
+                                id="vloerbot_bot_avatar" 
+                                name="vloerbot_bot_avatar" 
+                                value="<?php echo esc_url($bot_avatar); ?>" 
+                                class="regular-text"
+                                placeholder="https://example.com/bot-avatar.jpg"
+                            />
+                            <button 
+                                type="button" 
+                                class="button" 
+                                id="vloerbot_upload_bot_avatar"
+                            >Upload Image</button>
+                            <?php if (!empty($bot_avatar)): ?>
+                                <div style="margin-top: 10px;">
+                                    <img src="<?php echo esc_url($bot_avatar); ?>" alt="Bot Avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+                                </div>
+                            <?php endif; ?>
+                            <p class="description">Circular avatar image for bot messages in chat bubbles (recommended: square image, 100x100px or larger)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="vloerbot_user_avatar">User Avatar</label>
+                        </th>
+                        <td>
+                            <input 
+                                type="url" 
+                                id="vloerbot_user_avatar" 
+                                name="vloerbot_user_avatar" 
+                                value="<?php echo esc_url($user_avatar); ?>" 
+                                class="regular-text"
+                                placeholder="https://example.com/user-avatar.jpg"
+                            />
+                            <button 
+                                type="button" 
+                                class="button" 
+                                id="vloerbot_upload_user_avatar"
+                            >Upload Image</button>
+                            <?php if (!empty($user_avatar)): ?>
+                                <div style="margin-top: 10px;">
+                                    <img src="<?php echo esc_url($user_avatar); ?>" alt="User Avatar" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+                                </div>
+                            <?php endif; ?>
+                            <p class="description">Circular avatar image for user messages in chat bubbles (recommended: square image, 100x100px or larger)</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="vloerbot_wp_site_url">WordPress Site URL</label>
+                        </th>
+                        <td>
+                            <input 
+                                type="url" 
+                                id="vloerbot_wp_site_url" 
+                                name="vloerbot_wp_site_url" 
+                                value="<?php echo esc_url($wp_site_url); ?>" 
+                                class="regular-text"
+                                placeholder="<?php echo esc_attr(home_url()); ?>"
+                            />
+                            <p class="description">Your WordPress site URL (used for generating links to pages and posts). Defaults to current site URL.</p>
                         </td>
                     </tr>
                 </table>
@@ -535,6 +641,44 @@ class VloerBot_Chatbot {
                     file_frame.on('select', function() {
                         var attachment = file_frame.state().get('selection').first().toJSON();
                         $('#vloerbot_profile_image').val(attachment.url);
+                    });
+                    
+                    file_frame.open();
+                });
+                
+                // Media uploader for bot avatar
+                $('#vloerbot_upload_bot_avatar').on('click', function(e) {
+                    e.preventDefault();
+                    var file_frame = wp.media({
+                        title: 'Select Bot Avatar',
+                        button: {
+                            text: 'Use this image'
+                        },
+                        multiple: false
+                    });
+                    
+                    file_frame.on('select', function() {
+                        var attachment = file_frame.state().get('selection').first().toJSON();
+                        $('#vloerbot_bot_avatar').val(attachment.url);
+                    });
+                    
+                    file_frame.open();
+                });
+                
+                // Media uploader for user avatar
+                $('#vloerbot_upload_user_avatar').on('click', function(e) {
+                    e.preventDefault();
+                    var file_frame = wp.media({
+                        title: 'Select User Avatar',
+                        button: {
+                            text: 'Use this image'
+                        },
+                        multiple: false
+                    });
+                    
+                    file_frame.on('select', function() {
+                        var attachment = file_frame.state().get('selection').first().toJSON();
+                        $('#vloerbot_user_avatar').val(attachment.url);
                     });
                     
                     file_frame.open();

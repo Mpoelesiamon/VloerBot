@@ -245,6 +245,8 @@ const ChatWindow = ({ onClose, isOpen }: ChatWindowProps) => {
             isUser={message.isUser}
             timestamp={message.timestamp}
             attachments={message.attachments}
+            botAvatar={typeof window !== 'undefined' && (window as any).vloerbotConfig?.botAvatar}
+            userAvatar={typeof window !== 'undefined' && (window as any).vloerbotConfig?.userAvatar}
           />
         ))}
         {isTyping && (

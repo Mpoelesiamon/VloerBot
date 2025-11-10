@@ -68,13 +68,23 @@ const ChatInput = ({ onSendMessage, disabled }: ChatInputProps) => {
           disabled={(!message.trim() && attachments.length === 0) || disabled}
           className="text-white rounded-lg h-10 w-10 flex-shrink-0 disabled:opacity-50 flex items-center justify-center"
           style={{ 
-            hover: 'none', 
             backgroundColor: '#D5803F',
             border: 'none',
-            outline: 'none'
+            outline: 'none',
+            transition: 'none'
           }}
-          onMouseEnter={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#D5803F'; }}
-          onMouseLeave={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#D5803F'; }}
+          onMouseEnter={(e) => { 
+            if (!e.currentTarget.disabled) {
+              e.currentTarget.style.backgroundColor = '#D5803F';
+              e.currentTarget.style.transform = 'none';
+            }
+          }}
+          onMouseLeave={(e) => { 
+            if (!e.currentTarget.disabled) {
+              e.currentTarget.style.backgroundColor = '#D5803F';
+              e.currentTarget.style.transform = 'none';
+            }
+          }}
         >
           <Send className="w-4 h-4" />
         </button>
